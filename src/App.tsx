@@ -1,13 +1,23 @@
 import { useState } from 'react'
 import './App.css'
-import Header from "./components/header"
+import TableActions from './components/table_actions'
+// import ContractsTable from "./components/table";
+import "./styles/header.scss"
+import "./styles/main.scss"
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
-      <Header />
+      <div className="wrapper">
+        <div className="header">
+          <div className="logo_title">Contracts</div></div>
+        <TableActions />
+        {/* <ContractsTable /> */}
+      </div>
+      
     </>
   )
 }

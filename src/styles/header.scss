@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+@mixin Main_font($color){
+    font-family: "Noto Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    color: $color;
+}
+
+
+@mixin displayflex{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 25px;
+}
+
+$blackcolor:#262626;
+$greycolor:#595959;
+$whitecolor: #FFFFFF;
+
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+
+
+//   Header
+
+.header{
+    width: 100%;
+    height: 56px;
+    background-color: #F0F0F0;
+
+    @include displayflex();
+
+}
+
+.logo_title{
+    margin-left: 15px;
+    @include Main_font($blackcolor);
+}
+
+
+// header content
+
+
+.main{
+    width: 1250px;
+    margin-left: 200px;
+    margin-top: 40px;
+    @include displayflex();
+    
+}
+
+.main_content{
+    @include displayflex();
+}
+
+.sb_box{
+    display: flex;
+    justify-content: space-between;
+}
+
+.search, .selected_box, .download_box{
+    height: 30px;
+    display: flex;
+    gap: 10px;
+
+}
+
+.search_text, .download_text, .selected_text{
+    @include displayflex();
+}
+
+img{
+    scale: 0.6;
+}
+
+
+.selbut_box{
+    display: flex;
+    gap: 30px;
+}
+
+.main_action{
+    display: flex;
+    justify-content: space-between;
+}
+
+.title{
+    @include Main_font($blackcolor);
+    font-weight: 800;
+    font-size: 24px;
+}
+
+
+// Search
+
+.search{
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    width: 1200px;
+    overflow: hidden;
+  }
+  
+  .search-container input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    outline: none;
+    font-size: 16px;
+    transition: border-bottom 0.3s ease-in-out;
+  }
+
+  
+
+  .search:focus-within {
+    border-bottom: 1px solid #595959; /* Чорний бордер при фокусі */
+  }
+
+  .menu{
+    scale: 1;
+    position: relative;
+    top: 4px; /* Опускає іконку вниз */
+  }
+
+
+//   Buttons
+
+
+.butadd{
+    margin-left: 1100px;
+    margin-top: 15px;
+    position: absolute;
+    z-index: 1;
+
+    @include Main_font($whitecolor);
+    font-size: 14px;
+
+    width: 140px;
+    height: 32px;
+    background-color: #1890FF;
+    border: none;
+}
+
+
+.butbulk{
+    @include Main_font($blackcolor);
+    font-size: 14px;
+
+    width: 130px;
+    height: 32px;
+    background-color: #fff;
+    border: 1px solid #D9D9D9;
+}
+
+
+
