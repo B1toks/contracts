@@ -48,15 +48,9 @@ $whitecolor: #FFFFFF;
 
 // header content
 
-
 .main{
-    width: 1250px;
-    margin-left: 200px;
-    margin-top: 40px;
     @include displayflex();
-    
 }
-
 .main_content{
     @include displayflex();
 }
@@ -108,7 +102,7 @@ img{
 .search-container {
     display: flex;
     align-items: center;
-    width: 1200px;
+    width: 1400px;
     overflow: hidden;
   }
   
@@ -125,13 +119,13 @@ img{
   
 
   .search:focus-within {
-    border-bottom: 1px solid #595959; /* Чорний бордер при фокусі */
+    border-bottom: 1px solid #595959; 
   }
 
   .menu{
     scale: 1;
     position: relative;
-    top: 4px; /* Опускає іконку вниз */
+    top: 4px; 
   }
 
 
@@ -139,7 +133,7 @@ img{
 
 
 .butadd{
-    margin-left: 1100px;
+    margin-left: 1300px;
     margin-top: 15px;
     position: absolute;
     z-index: 1;

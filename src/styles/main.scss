@@ -26,3 +26,73 @@ $greycolor:#595959;
 
 // Main (table)
 
+.content{
+    width: 1450px;
+    margin-left: 200px;
+    margin-top: 40px;
+    @include displayflex();
+    @include Secondary_font($blackcolor);
+}
+
+.table-container {
+    overflow-x: auto;
+  }
+  
+  .table {
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
+    text-align: left;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+  }
+  
+  tr:hover {
+    background-color: #f4f4f4;
+  }
+  
+  .status {
+    font-weight: bold;
+  }
+  
+  .status-active {
+    color: green;
+  }
+  
+  .status-disabled {
+    color: red;
+  }
+  
+  .status-paused {
+    color: orange;
+  }
+
+  th:first-child,
+  td:first-child {
+    width: 50px;
+    text-align: center;
+  }
+  
+  .menu-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+  }
+
+
+.arrows{
+    scale: 1;
+    position: relative;
+    top: 2px; 
+}
