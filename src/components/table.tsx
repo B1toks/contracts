@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { contracts } from "./data";
 import "../styles/main.scss";
-import IconPlaceholder from "../img/IconPlaceholder.svg"
+import IconPlaceholder from "../img/IconPlaceholder.svg";
 
 interface Contract {
   contractName: string;
@@ -20,13 +20,32 @@ const statusClasses: { [key: string]: string } = {
   Paused: "status-paused",
 };
 
-const ContractsTable: React.FC = () => {
+interface ContractsTableProps {
+  onCountChange: (count: number) => void; 
+}
+
+const ContractsTable: React.FC<ContractsTableProps> = ({ onCountChange }) => {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
   const handleCheckboxChange = (index: number) => {
-    setSelectedRows((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
-    );
+    setSelectedRows((prev) => {
+      const newSelectedRows = prev.includes(index)
+        ? prev.filter((i) => i !== index)
+        : [...prev, index];
+      onCountChange(newSelectedRows.length); 
+      return newSelectedRows;
+    });
+  };
+
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      const allSelected = contracts.map((_, i) => i);
+      setSelectedRows(allSelected);
+      onCountChange(allSelected.length); 
+    } else {
+      setSelectedRows([]); 
+      onCountChange(0); 
+    }
   };
 
   return (
@@ -37,18 +56,12 @@ const ContractsTable: React.FC = () => {
             <th>
               <input
                 type="checkbox"
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    setSelectedRows(contracts.map((_, i) => i));
-                  } else {
-                    setSelectedRows([]);
-                  }
-                }}
-                checked={selectedRows.length === contracts.length}
+                onChange={handleSelectAll} 
+                checked={selectedRows.length === contracts.length} 
               />
             </th>
             {[
-              "Contract Name", 
+              "Contract Name",
               "Contract Number",
               "Company",
               "Contract Type",
@@ -57,9 +70,10 @@ const ContractsTable: React.FC = () => {
               "End Date",
               "Status",
             ].map((header) => (
-              <th key={header}>{header} <img className = "arrows"src={IconPlaceholder} alt="download" /></th>
+              <th key={header}>
+                {header} <img className="arrows" src={IconPlaceholder} alt="download" />
+              </th>
             ))}
-            
             <th>Actions</th>
           </tr>
         </thead>
@@ -69,8 +83,8 @@ const ContractsTable: React.FC = () => {
               <td>
                 <input
                   type="checkbox"
-                  checked={selectedRows.includes(index)}
-                  onChange={() => handleCheckboxChange(index)}
+                  checked={selectedRows.includes(index)} 
+                  onChange={() => handleCheckboxChange(index)} 
                 />
               </td>
               <td>{contract.contractName}</td>

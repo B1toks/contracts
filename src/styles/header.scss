@@ -9,7 +9,14 @@
     font-size: 16px;
     color: $color;
 }
-
+@mixin Secondary_font($color){
+    font-family: "Roboto";
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 12px;
+    color: $color;
+}
 
 @mixin displayflex{
     display: flex;
@@ -127,7 +134,14 @@ img{
     position: relative;
     top: 4px; 
   }
+.SelectedNumber{
+    @include Main_font($blackcolor);
+    margin-top:4px;
+}
 
+.selected_text{
+    @include Main_font($blackcolor)
+}
 
 //   Buttons
 
