@@ -2,7 +2,7 @@ import React from "react";
 import download from "../img/download.svg";
 import vector from "../img/Vector.svg";
 import search from "../img/search.svg";
-import menu from "../img/menu.svg";
+import { Dropdown } from "../components/dropdownmenu"
 
 interface TableActionsProps {
   selectedCount: number; 
@@ -37,9 +37,10 @@ const TableActions: React.FC<TableActionsProps> = ({ selectedCount }) => {
               <div className="selected_text"> Selected</div>
             </div>
             <div className="action_box">
-              <button className="butbulk">
+              {/* <button className="butbulk">
                 Bulk Actions <img src={menu} className="menu" alt="menu" />
-              </button>
+              </button> */}
+              <Dropdown label = "Bulk Actions"/>
             </div>
           </div>
           <div className="download_box">
