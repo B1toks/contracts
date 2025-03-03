@@ -96,3 +96,66 @@ $greycolor:#595959;
     position: relative;
     top: 2px; 
 }
+
+
+// delete
+
+.menu-btn {
+  font-size: 14px;
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+  border: 1px solid #D9D9D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+      background-color: #f2f2f2;
+  }
+}
+
+.delete-btn {
+  font-size: 14px;
+  width: 80px;
+  height: 32px;
+  background-color: #ff4d4d;
+  border: 1px solid #D9D9D9;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  display: block;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  position: absolute;
+  &:hover {
+      background-color: #e60000;
+  }
+}
+
+.menu-dd {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 128px;
+  background: white;
+  border: 1px solid #D9D9D9;
+  position: absolute;
+  z-index: 10;
+}
+
+.item-dd {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.item-dd:hover {
+  background: #f2f2f2;
+}
+
+.delete-btn:disabled {
+  opacity: 0.5;
+  background-color: #ccc;
+}

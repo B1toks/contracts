@@ -1,14 +1,44 @@
-import React from "react";
+import React, {useState} from "react";
 import download from "../img/download.svg";
 import vector from "../img/Vector.svg";
 import search from "../img/search.svg";
-import { Dropdown } from "../components/dropdownmenu"
+import menu from "../img/menu.svg";
+
 
 interface TableActionsProps {
   selectedCount: number; 
+  handleDelete: () => void
 }
 
-const TableActions: React.FC<TableActionsProps> = ({ selectedCount }) => {
+type Props = {
+  label: string;
+};
+
+
+
+
+const TableActions: React.FC<TableActionsProps> = ({ selectedCount, handleDelete }) => {
+  // Bulk actions
+  const [isModalOpen, setIsModalOpen] = useState (false);
+  const Dropdown = ({label}: Props) => {
+    const [isOpen, setIsOpen] = useState (false);
+  
+    const toggleDropdown = () => 
+        {setIsOpen(prev => !prev)};
+  
+    
+    
+    return (
+        <div className="root">
+            <button className="butbulk" onClick = {toggleDropdown} disabled = {selectedCount === 0}> {label} <img src={menu} className="menu" alt="menu" /></button>
+            {isOpen && (
+                <ul className="menu_dd">
+                    <li className="item_dd" onClick = {() => setIsModalOpen(true)}> Delete</li>
+                </ul>
+            )}
+        </div>
+    );
+  };
   return (
     <div className="main">
       <div className="title">Contracts</div>
@@ -17,13 +47,7 @@ const TableActions: React.FC<TableActionsProps> = ({ selectedCount }) => {
           <div className="search">
             <img src={search} alt="search" />
             <div className="search-container">
-              <input
-                type="text"
-                id="search"
-                name="search"
-                placeholder="Search contracts..."
-                required
-              />
+              <input type="text" id="search" name="search" placeholder="Search contracts..." required />
             </div>
           </div>
           <button className="butadd">+ Add Contract</button>
@@ -37,10 +61,7 @@ const TableActions: React.FC<TableActionsProps> = ({ selectedCount }) => {
               <div className="selected_text"> Selected</div>
             </div>
             <div className="action_box">
-              {/* <button className="butbulk">
-                Bulk Actions <img src={menu} className="menu" alt="menu" />
-              </button> */}
-              <Dropdown label = "Bulk Actions"/>
+              <Dropdown label="Bulk Actions" />
             </div>
           </div>
           <div className="download_box">
@@ -49,6 +70,17 @@ const TableActions: React.FC<TableActionsProps> = ({ selectedCount }) => {
           </div>
         </div>
       </div>
+
+      {isModalOpen && (
+      <div className="modal">
+        <div className="modal-content">
+          <p>Are you sure you want to delete the selected items?</p>
+          <button onClick={() => { handleDelete(); setIsModalOpen(false); }}>Yes</button>
+            <button onClick={() => setIsModalOpen(false)}>No</button>
+        </div>
+      </div>
+    )}
+
     </div>
   );
 };

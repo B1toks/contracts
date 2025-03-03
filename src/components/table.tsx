@@ -1,18 +1,7 @@
 import React, { useState } from "react";
-import { contracts } from "./data";
+import { contract } from "./data";
 import "../styles/main.scss";
 import IconPlaceholder from "../img/IconPlaceholder.svg";
-
-interface Contract {
-  contractName: string;
-  contractNumber: string;
-  company: string;
-  contractType: string;
-  licenses: string;
-  startDate: string;
-  endDate: string;
-  status: string;
-}
 
 const statusClasses: { [key: string]: string } = {
   Active: "status-active",
@@ -21,31 +10,49 @@ const statusClasses: { [key: string]: string } = {
 };
 
 interface ContractsTableProps {
-  onCountChange: (count: number) => void; 
+  onCountChange: (count: number, selectedIndexes: number[]) => void;
+  selectedRows: number[];
+  setSelectedRows: React.Dispatch<React.SetStateAction<number[]>>;
+  rows: contract[];
+  setRows: React.Dispatch<React.SetStateAction<contract[]>>;
 }
 
-const ContractsTable: React.FC<ContractsTableProps> = ({ onCountChange }) => {
-  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+const ContractsTable: React.FC<ContractsTableProps> = ({
+  onCountChange,
+  selectedRows,
+  setSelectedRows,
+  rows,
+  setRows,
+}) => {
+  const [openMenuId, setOpenMenuId] = useState<number | null>(null);
 
-  const handleCheckboxChange = (index: number) => {
-    setSelectedRows((prev) => {
-      const newSelectedRows = prev.includes(index)
-        ? prev.filter((i) => i !== index)
-        : [...prev, index];
-      onCountChange(newSelectedRows.length); 
+  const handleCheckboxChange = (id: number) => {
+    setSelectedRows((prevSelectedRows) => {
+      const newSelectedRows = prevSelectedRows.includes(id)
+        ? prevSelectedRows.filter((i) => i !== id)
+        : [...prevSelectedRows, id];
+
+      onCountChange(newSelectedRows.length, newSelectedRows);
       return newSelectedRows;
     });
   };
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      const allSelected = contracts.map((_, i) => i);
+      const allSelected = rows.map((contract) => contract.id);
       setSelectedRows(allSelected);
-      onCountChange(allSelected.length); 
+      onCountChange(allSelected.length, allSelected);
     } else {
-      setSelectedRows([]); 
-      onCountChange(0); 
+      setSelectedRows([]);
+      onCountChange(0, []);
     }
+  };
+
+  const handleDelete = (idsToDelete: number[]) => {
+    setRows((prevRows) => prevRows.filter((contract) => !idsToDelete.includes(contract.id)));
+    setSelectedRows((prevSelected) => prevSelected.filter((id) => !idsToDelete.includes(id)));
+    onCountChange(0, []);
+    setOpenMenuId(null);
   };
 
   return (
@@ -56,8 +63,8 @@ const ContractsTable: React.FC<ContractsTableProps> = ({ onCountChange }) => {
             <th>
               <input
                 type="checkbox"
-                onChange={handleSelectAll} 
-                checked={selectedRows.length === contracts.length} 
+                onChange={handleSelectAll}
+                checked={selectedRows.length === rows.length && rows.length > 0}
               />
             </th>
             {[
@@ -78,13 +85,13 @@ const ContractsTable: React.FC<ContractsTableProps> = ({ onCountChange }) => {
           </tr>
         </thead>
         <tbody>
-          {contracts.map((contract: Contract, index: number) => (
-            <tr key={index}>
+          {rows.map((contract) => (
+            <tr key={contract.id}>
               <td>
                 <input
                   type="checkbox"
-                  checked={selectedRows.includes(index)} 
-                  onChange={() => handleCheckboxChange(index)} 
+                  checked={selectedRows.includes(contract.id)}
+                  onChange={() => handleCheckboxChange(contract.id)}
                 />
               </td>
               <td>{contract.contractName}</td>
@@ -98,7 +105,12 @@ const ContractsTable: React.FC<ContractsTableProps> = ({ onCountChange }) => {
                 {contract.status}
               </td>
               <td className="actions">
-                <button className="menu-btn">⋮</button>
+                <button className="menu-btn" onClick={() => setOpenMenuId(openMenuId === contract.id ? null : contract.id)}>⋮</button>
+                {openMenuId === contract.id && (
+                  <div className="menu-dd">
+                    <button className="delete-btn" onClick={() => handleDelete([contract.id])}>Delete</button>
+                  </div>
+                )}
               </td>
             </tr>
           ))}
