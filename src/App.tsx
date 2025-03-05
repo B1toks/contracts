@@ -2,11 +2,12 @@ import { useState } from "react";
 import "./App.css";
 import TableActions from "./components/table_actions";
 import ContractsTable from "./components/table";
-import { contracts } from "./components/data";
+import { contracts as initialContracts } from "./components/data";
 import "./styles/header.scss";
 import "./styles/main.scss";
 
 function App() {
+  const [contracts, setContracts] = useState(initialContracts || []);
   const [selectedCount, setSelectedCount] = useState<number>(0);
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [rows, setRows] = useState(contracts);
@@ -28,13 +29,20 @@ function App() {
         <div className="logo_title">Contracts</div>
       </div>
       <div className="content">
-        <TableActions selectedCount={selectedCount} handleDelete={handleDelete} />
-        <ContractsTable 
-          onCountChange={handleCountChange} 
-          rows={rows} 
-          setRows={setRows} 
-          selectedRows={selectedRows} 
-          setSelectedRows={setSelectedRows} 
+        <TableActions
+          selectedCount={selectedCount}
+          handleDelete={handleDelete}
+          contracts={contracts}
+          setContracts={setContracts}
+          rows={rows}
+          setRows={setRows}
+        />
+        <ContractsTable
+          onCountChange={handleCountChange}
+          rows={rows}
+          setRows={setRows}
+          selectedRows={selectedRows}
+          setSelectedRows={setSelectedRows}
         />
       </div>
     </div>

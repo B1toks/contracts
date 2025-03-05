@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { contract } from "./data";
+import { contracts } from "./data"; 
 import "../styles/main.scss";
 import IconPlaceholder from "../img/IconPlaceholder.svg";
 
@@ -13,8 +13,8 @@ interface ContractsTableProps {
   onCountChange: (count: number, selectedIndexes: number[]) => void;
   selectedRows: number[];
   setSelectedRows: React.Dispatch<React.SetStateAction<number[]>>;
-  rows: contract[];
-  setRows: React.Dispatch<React.SetStateAction<contract[]>>;
+  rows: typeof contracts;  
+  setRows: React.Dispatch<React.SetStateAction<typeof contracts>>;  
 }
 
 const ContractsTable: React.FC<ContractsTableProps> = ({
@@ -67,16 +67,7 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
                 checked={selectedRows.length === rows.length && rows.length > 0}
               />
             </th>
-            {[
-              "Contract Name",
-              "Contract Number",
-              "Company",
-              "Contract Type",
-              "Licenses",
-              "Start Date",
-              "End Date",
-              "Status",
-            ].map((header) => (
+            {["Contract Name", "Contract Number", "Company", "Contract Type", "Licenses", "Start Date", "End Date", "Status"].map((header) => (
               <th key={header}>
                 {header} <img className="arrows" src={IconPlaceholder} alt="download" />
               </th>
