@@ -25,6 +25,7 @@ interface TableActionsProps {
   contracts: Contract[];
   setContracts: React.Dispatch<React.SetStateAction<Contract[]>>;
   setRows: React.Dispatch<React.SetStateAction<Contract[]>>;
+  rows: Contract[];
 }
 
 type Props = {
@@ -37,6 +38,7 @@ const TableActions: React.FC<TableActionsProps> = ({
   contracts = [],
   setContracts,
   setRows,
+  rows,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
@@ -60,7 +62,28 @@ const TableActions: React.FC<TableActionsProps> = ({
     setRows(filtered);
   }, [debouncedSearchTerm, contracts, setRows]);
 
+  // Export
+  const exportToCSV = () => {
+    if (rows.length === 0) {
+      alert ("There is no data for export.");
+      return;
+    }
+    const csvHeader = "ID, Contract Name, Contract Number, Company, Start Date, End Date, Status, Contract Type, Licenses\n";
+    const csvRows = rows.map(contract =>
+      `${contract.id},"${contract.contractName}","${contract.contractNumber}","${contract.company}","${contract.startDate}","${contract.endDate}","${contract.status}","${contract.contractType}","${contract.licenses}"`
+    );
   
+    const csvContent = csvHeader + csvRows.join ("\n");
+    const blob = new Blob ([csvContent], {type: "text/csv; charset = utf-8;"});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", "contracts.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+
 
   const generateContractNumber = () => {
     if (contracts.length === 0) {
@@ -163,10 +186,12 @@ const TableActions: React.FC<TableActionsProps> = ({
               <Dropdown label="Bulk Actions" />
             </div>
           </div>
-          <div className="download_box">
-            <img src={download} alt="download" />
-            <div className="download_text">Download as CSV</div>
-          </div>
+          <button className="download_box">
+            <img className = "downloadbut" src={download} alt="download" />
+            <div className="download_text" onClick={exportToCSV}>
+              <div className="download_text">Download as CSV</div>
+            </div>
+          </button>
         </div>
       </div>
 

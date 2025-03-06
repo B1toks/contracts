@@ -300,3 +300,28 @@ img{
     cursor: pointer;
   }
   
+
+// download button
+
+.download_box {
+  all: unset; 
+  cursor: pointer; 
+  color: inherit; 
+  font-size: inherit; 
+  align-items: center; 
+  height: 30px;
+  width: 150px;
+  display: flex;
+  gap: 10px;
+}
+
+.download_text{
+  @include Main_font($blackcolor);
+  font-size: 14px;
+}
+
+.downloadbut{
+  width: 16px;
+  height: 16px;
+  scale: 1.0;
+}
