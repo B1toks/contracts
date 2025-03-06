@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState} from "react";
 import download from "../img/download.svg";
 import vector from "../img/Vector.svg";
 import search from "../img/search.svg";
 import menu from "../img/menu.svg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useDebounce } from "./useDebounce";
 
 interface Contract {
   id: number;
@@ -23,7 +24,6 @@ interface TableActionsProps {
   handleDelete: () => void;
   contracts: Contract[];
   setContracts: React.Dispatch<React.SetStateAction<Contract[]>>;
-  rows: Contract[];
   setRows: React.Dispatch<React.SetStateAction<Contract[]>>;
 }
 
@@ -36,9 +36,10 @@ const TableActions: React.FC<TableActionsProps> = ({
   handleDelete,
   contracts = [],
   setContracts,
-  rows,
   setRows,
 }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [contractName, setContractName] = useState("");
@@ -47,15 +48,37 @@ const TableActions: React.FC<TableActionsProps> = ({
   const [endDate, setEndDate] = useState(new Date());
   const [contractType, setContractType] = useState("Project");
 
+  useEffect (() => {
+    if (!debouncedSearchTerm) {
+      setRows (contracts);
+      return;
+    }
+    const filtered = contracts.filter((contract) =>
+      contract.contractName.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+    );
+
+    setRows(filtered);
+  }, [debouncedSearchTerm, contracts, setRows]);
+
+  
+
   const generateContractNumber = () => {
     if (contracts.length === 0) {
       return `C20220420-000001`;
     }
 
     const lastContract = contracts[contracts.length - 1];
-    const lastNumber = parseInt(lastContract.contractNumber.split("-")[0].slice(1));
+    const match = lastContract.contractNumber.match(/^C(\d+)-\d+$/);
+  
+    if (!match) {
+      console.error("Невірний формат номера контракту:", lastContract.contractNumber);
+      return `C20220420-000001`;
+    }
+  
+    const lastNumber = parseInt(match[1], 10);
     return `C${lastNumber + 1}-000001`;
   };
+  
 
   const formatDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -111,10 +134,17 @@ const TableActions: React.FC<TableActionsProps> = ({
       <div className="title">Contracts</div>
       <div className="main_content">
         <div className="sb_box">
-          <div className="search">
+        <div className="search">
             <img src={search} alt="search" />
             <div className="search-container">
-              <input type="text" id="search" name="search" placeholder="Search contracts..." required />
+              <input
+                type="text"
+                id="search"
+                name="search"
+                placeholder="Search contracts..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
           </div>
           <button className="butadd" onClick={() => setIsCreateModalOpen(true)}>
