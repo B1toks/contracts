@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { contracts } from "./data"; // Припускаємо, що 'contracts' містить дані
+import { contracts } from "./data"; 
 import "../styles/main.scss";
-import IconPlaceholder from "../img/IconPlaceholder.svg";
+import IconPlaceholder from "../../public/IconPlaceholder.svg";
 
 const statusClasses: { [key: string]: string } = {
   Active: "status-active",
@@ -41,9 +41,8 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [sortConfig, setSortConfig] = useState<{ key: keyof Contract; direction: string } | null>(null);
 
-  // Використовуємо 'contracts' для ініціалізації рядків таблиці
   useEffect(() => {
-    setRows(contracts); // Завантажуємо контракти при завантаженні компонента
+    setRows(contracts); 
     setSelectedRows((prevSelectedRows) =>
       prevSelectedRows.filter((id) => contracts.some((contract) => contract.id === id))
     );
