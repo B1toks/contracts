@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { contracts } from "./data";
+import { contracts } from "./data"; // Припускаємо, що 'contracts' містить дані
 import "../styles/main.scss";
 import IconPlaceholder from "../img/IconPlaceholder.svg";
 
@@ -41,11 +41,13 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [sortConfig, setSortConfig] = useState<{ key: keyof Contract; direction: string } | null>(null);
 
+  // Використовуємо 'contracts' для ініціалізації рядків таблиці
   useEffect(() => {
+    setRows(contracts); // Завантажуємо контракти при завантаженні компонента
     setSelectedRows((prevSelectedRows) =>
-      prevSelectedRows.filter((id) => rows.some((contract) => contract.id === id))
+      prevSelectedRows.filter((id) => contracts.some((contract) => contract.id === id))
     );
-  }, [rows]);
+  }, []);
 
   const handleSort = (key: keyof Contract) => {
     let direction = "asc";
@@ -65,8 +67,8 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
   const handleCheckboxChange = (id: number) => {
     setSelectedRows((prevSelectedRows) => {
       const newSelectedRows = prevSelectedRows.includes(id)
-        ? prevSelectedRows.filter((i) => i !== id) 
-        : [...prevSelectedRows, id]; 
+        ? prevSelectedRows.filter((i) => i !== id)
+        : [...prevSelectedRows, id];
       onCountChange(newSelectedRows.length, newSelectedRows);
       return newSelectedRows;
     });
@@ -150,9 +152,15 @@ const ContractsTable: React.FC<ContractsTableProps> = ({
         <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>&lt;</button>
         <span>{currentPage}</span>
         <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>&gt;</button>
-        <select value={itemsPerPage} onChange={(e) => setItemsPerPage(Number(e.target.value))}>
+        <select
+          className="select-container"
+          value={itemsPerPage}
+          onChange={(e) => setItemsPerPage(Number(e.target.value))}
+        >
           {[5, 10, 15, 20].map((num) => (
-            <option key={num} value={num}>{num} / page</option>
+            <option key={num} value={num}>
+              {num} / page
+            </option>
           ))}
         </select>
       </div>
