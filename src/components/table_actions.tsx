@@ -1,8 +1,8 @@
 import React, { useEffect, useState} from "react";
-import download from "../../public/download.svg";  
-import vector from "../../public/Vector.svg"; 
-import search from "../../public/search.svg"; 
-import menu from "../../public/Menu.svg";  
+import download from "../assets/download.svg";  
+import vector from "../assets/Vector.svg"; 
+import search from "../assets/search.svg"; 
+import menu from "../assets/Menu.svg";  
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDebounce } from "./useDebounce";

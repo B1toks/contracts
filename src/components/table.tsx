@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { contracts } from "./data"; 
 import "../styles/main.scss";
-import IconPlaceholder from "../../public/IconPlaceholder.svg";
+import IconPlaceholder from "../assets/IconPlaceholder.svg";
 
 const statusClasses: { [key: string]: string } = {
   Active: "status-active",
