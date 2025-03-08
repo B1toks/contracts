@@ -87,22 +87,23 @@ const TableActions: React.FC<TableActionsProps> = ({
 
   const generateContractNumber = () => {
     if (contracts.length === 0) {
-      return `C20220420-000001`;
+      return `CN000001`;
     }
-
+  
     const lastContract = contracts[contracts.length - 1];
-    const match = lastContract.contractNumber.match(/^C(\d+)-\d+$/);
+    const match = lastContract.contractNumber.match(/^CN(\d+)$/);
   
     if (!match) {
       console.error("Невірний формат номера контракту:", lastContract.contractNumber);
-      return `C20220420-000001`;
+      return `CN000001`;
     }
   
     const lastNumber = parseInt(match[1], 10);
-    return `C${lastNumber + 1}-000001`;
+    const nextNumber = lastNumber + 1;
+    return `CN${nextNumber.toString().padStart(6, "0")}`;
   };
-  
 
+  
   const formatDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
       day: "numeric",
@@ -208,12 +209,24 @@ const TableActions: React.FC<TableActionsProps> = ({
       {isCreateModalOpen && (
         <div className="custom-modal-overlay">
           <div className="custom-modal-content">
-            <h3>New Contract</h3>
-            <label>Contract Name</label>
-            <input type="text" value={contractName} onChange={(e) => setContractName(e.target.value)} />
-
-            <label>Contract Number</label>
-            <input type="text" value={generateContractNumber()} disabled />
+            <div className="custom-modal-content-header">
+              <h3>New Contract</h3>
+              <button className="close-button" onClick={() => setIsCreateModalOpen(false)}>
+                ✖
+              </button>
+            </div>
+            <div className="contract-name-number-box">
+              <div className="contract-name-box">
+                <label>Contract Name</label>
+                <input type="text" className="contract-half-input" value={contractName} onChange={(e) => setContractName(e.target.value)} />
+              </div>
+              
+              <div className="contract-number-box">
+                <label>Contract Number</label>
+                <input type="text" className="contract-half-input" value={generateContractNumber()} disabled />
+              </div>
+              
+            </div>
 
             <label>Company</label>
             <select value={company} onChange={(e) => setCompany(e.target.value)}>
@@ -221,12 +234,19 @@ const TableActions: React.FC<TableActionsProps> = ({
               <option value="BP">BP</option>
               <option value="Exxon">Exxon</option>
             </select>
-
-            <label>Start Date</label>
-            <DatePicker selected={startDate} onChange={(date) => setStartDate(date!)} />
-
-            <label>End Date</label>
-            <DatePicker selected={endDate} onChange={(date) => setEndDate(date!)} />
+            
+            <div className="full-data-box">
+              <div className="start-date-box">
+                <label>Start Date</label>
+                <DatePicker className="contract-half-input" selected={startDate} onChange={(date) => setStartDate(date!)} />
+              </div>
+              
+              <div className="end-date-box">
+                <label>End Date</label>
+                <DatePicker className="contract-half-input" selected={endDate} onChange={(date) => setEndDate(date!)} />
+              </div>
+            </div>
+            
 
             <label>Contract Type</label>
             <select value={contractType} onChange={(e) => setContractType(e.target.value)}>

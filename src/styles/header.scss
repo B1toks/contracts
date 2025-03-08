@@ -150,7 +150,7 @@ img{
     margin-left: 1300px;
     margin-top: 15px;
     position: absolute;
-    z-index: 1;
+    z-index:1;
 
     @include Main_font($whitecolor);
     font-size: 14px;
@@ -257,6 +257,8 @@ img{
     border-radius: 8px;
     width: 400px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    @include displayflex();
+    gap: 10px;
   }
   
   .custom-modal-content h3 {
@@ -279,8 +281,11 @@ img{
   
   .custom-modal-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 15px;
     margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #F0F0F0;
   }
   
   .custom-modal-buttons .cancel {
@@ -300,7 +305,35 @@ img{
     cursor: pointer;
   }
   
+  .custom-modal-content-header{
+    border-bottom: 1px solid #F0F0F0;
+  }
 
+  .contract-half-input{
+    width: 170px !important;;  
+  }
+
+  .contract-name-number-box, .full-data-box{
+    @include displayflex();
+    flex-direction: row;
+  }
+  .custom-modal-content-header{
+    display: flex;
+    justify-content: space-between;
+  }
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.2s ease-in-out;
+    margin-top: -15px;
+  }
+  
+  .close-button:hover {
+    color: #000;
+  }
 // download button
 
 .download_box {

@@ -229,30 +229,28 @@ $greycolor:#595959;
     }
   }
 }
-/* Стилі для самого select елементу */
+
 .select-container {
   position: relative;
-  width: 150px; /* Можна змінити під потрібну ширину */
+  width: 150px; 
   font-size: 16px;
   font-family: Arial, sans-serif;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 8px;
-  appearance: none; /* Забирає стандартний вигляд на деяких браузерах */
+  appearance: none; 
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-/* Стилі при фокусі на select */
 .select-container:focus {
   border-color: #6c5ce7;
   box-shadow: 0 0 5px rgba(108, 92, 247, 0.6);
 }
 
-/* Стилі для стрілки, що відображається в select */
 .select-container::after {
-  content: '▼'; /* Додає стрілку вниз */
+  content: '▼'; 
   position: absolute;
   top: 50%;
   right: 10px;
@@ -262,7 +260,6 @@ $greycolor:#595959;
   pointer-events: none;
 }
 
-/* Стилі для option елементів */
 .select-container option {
   padding: 10px;
   font-size: 14px;
@@ -272,7 +269,6 @@ $greycolor:#595959;
   transition: background-color 0.3s ease;
 }
 
-/* Стилі для option при наведенні */
 .select-container option:hover {
   background-color: #f1f1f1;
   color: #333;
