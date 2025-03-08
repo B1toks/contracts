@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from "react";
 import download from "../assets/download.svg";  
 import vector from "../assets/Vector.svg"; 
-import search from "../assets/search.svg"; 
+import search from "../assets/Search.svg"; 
 import menu from "../assets/Menu.svg";  
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
