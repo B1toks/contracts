@@ -2,7 +2,7 @@
 
 A controlled-state **contracts management table** — multi-select rows with delete actions, built as a **hiring test task for [NiftyHR](https://niftyhr.com)**. They evaluated the implementation and brought me on as **Interim Front-End Developer** shortly after.
 
-📋 *(Live demo: not currently deployed)*
+📋 *(Live demo: (https://contracts-red.vercel.app/))*
 
 ---
 
